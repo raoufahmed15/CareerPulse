@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ../backend:/app
+    environment:
+      - ENV=development
+
+  db:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: careerpulse
+      POSTGRES_PASSWORD: careerpulse
+      POSTGRES_DB: careerpulse
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:
